@@ -1,0 +1,30 @@
+.navbar {
+  background-color: #00bbff;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  max-width: auto;
+  margin: 0 auto;
+  border-bottom: 1px solid #f2f2f2;
+}
+.navbar h1 {
+  color: white;
+  font-size: xx-large;
+}
+.navbar .links {
+  margin-left: auto;
+}
+.navbar a {
+  margin-left: 16px;
+  text-decoration: none;
+  padding: 6px;
+}
+.navbar a:hover {
+  color: #047aa5;
+  background-color: inherit;
+}
+.content {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+}
