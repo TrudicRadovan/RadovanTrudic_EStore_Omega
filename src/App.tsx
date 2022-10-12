@@ -5,11 +5,8 @@ import ShoppingCart from './pages/ShoppingCart/ShoppingCart';
 import Favourites from './pages/Favourites/Favourites';
 import UserProfile from './pages/UserProfile/UserProfile';
 import React from 'react';
-import getAllData from './services/getAllData';
 
 function App() {
-  getAllData();
-
   return (
     <Router>
       <div className="App">

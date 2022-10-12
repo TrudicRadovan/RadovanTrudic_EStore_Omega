@@ -6,7 +6,6 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import HomeIcon from '@mui/icons-material/Home';
 import React from 'react';
 import './Navbar.css';
-// import { red } from '@mui/material/colors';
 
 const Navbar = () => {
   return (
