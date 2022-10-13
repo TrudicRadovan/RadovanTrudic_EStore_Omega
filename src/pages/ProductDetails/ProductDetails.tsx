@@ -1,5 +1,5 @@
 import { Button, ButtonBase, Grid, IconButton, Rating, styled, Tooltip, Typography } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import FavoriteIconOutlined from '@mui/icons-material/FavoriteBorderOutlined';
@@ -8,6 +8,7 @@ import getData from '../../services/getData';
 import './ProductDetails.css';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import ImageSlider from '../../components/ImageSlider/ImageSlider';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 const Img = styled('img')({
   margin: 'auto',
@@ -24,6 +25,15 @@ const ProductDetails = () => {
   const { id } = useParams();
   const { data: product, loading, error } = getData('https://dummyjson.com/products/' + id);
   const navigate = useNavigate();
+  const [icon, setIcon] = useState(0);
+
+  function onButtonClicked() {
+    if (icon === 0) {
+      setIcon(1);
+    } else {
+      setIcon(0);
+    }
+  }
 
   return (
     <div className="product-details">
@@ -42,13 +52,19 @@ const ProductDetails = () => {
           <Grid item lg={6} container direction="column" justifyContent="center" alignItems="flex-start">
             <Grid item container direction="row" justifyContent="flex-end" alignItems="center">
               <Grid item>
-                <Tooltip title="Add to favourites">
-                  <Typography variant="button">
-                    <IconButton>
-                      <FavoriteIconOutlined />
-                    </IconButton>
-                  </Typography>
-                </Tooltip>
+                <Typography variant="button">
+                  <IconButton color={icon === 1 ? 'primary' : 'default'} onClick={() => onButtonClicked()}>
+                    {icon === 1 ? (
+                      <Tooltip title="Remove from favourites">
+                        <FavoriteIcon />
+                      </Tooltip>
+                    ) : (
+                      <Tooltip title="Add to favourites">
+                        <FavoriteIconOutlined />
+                      </Tooltip>
+                    )}
+                  </IconButton>
+                </Typography>
               </Grid>
             </Grid>
             <Grid item>
@@ -110,3 +126,6 @@ const ProductDetails = () => {
 };
 
 export default ProductDetails;
+function onButtonClicked(id: string | undefined) {
+  throw new Error('Function not implemented.');
+}
