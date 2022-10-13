@@ -7,6 +7,7 @@ import ShoppingCartIconOutlined from '@mui/icons-material/ShoppingCartOutlined';
 import getData from '../../services/getData';
 import './ProductDetails.css';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
+import ImageSlider from '../../components/ImageSlider/ImageSlider';
 
 const Img = styled('img')({
   margin: 'auto',
@@ -31,11 +32,11 @@ const ProductDetails = () => {
       {loading && <div>Loading...</div>}
       {product && (
         <Grid container spacing={3} direction="row" justifyContent="center" alignItems="flex-start">
-          <Grid item lg={6} container>
-            <Grid item>
-              <ButtonBase sx={{ width: 450, height: 450 }} onClick={() => handleClick(product)}>
-                <Img src={product.thumbnail} />
-              </ButtonBase>
+          <Grid item lg={6} container direction="column" justifyContent="center" alignItems="flex-start">
+            <Grid item container direction="row" justifyContent="flex-start" alignItems="center">
+              <Grid item>
+                <ImageSlider productImages={product.images} />
+              </Grid>
             </Grid>
           </Grid>
           <Grid item lg={6} container direction="column" justifyContent="center" alignItems="flex-start">
