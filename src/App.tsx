@@ -5,6 +5,7 @@ import ShoppingCart from './pages/ShoppingCart/ShoppingCart';
 import Favourites from './pages/Favourites/Favourites';
 import UserProfile from './pages/UserProfile/UserProfile';
 import React from 'react';
+import ProductDetails from './pages/ProductDetails/ProductDetails';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Route path="/cart" element={<ShoppingCart />} />
             <Route path="/favourites" element={<Favourites />} />
             <Route path="/user" element={<UserProfile />} />
+            <Route path="/details/:id" element={<ProductDetails />} />
           </Routes>
         </div>
       </div>

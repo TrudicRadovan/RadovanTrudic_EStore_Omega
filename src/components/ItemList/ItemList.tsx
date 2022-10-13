@@ -10,6 +10,7 @@ import FavoriteIconOutlined from '@mui/icons-material/FavoriteBorderOutlined';
 import IconButton from '@mui/material/IconButton';
 import './ItemList.css';
 import { ItemListPropsType } from '../../types/ItemListPropsType';
+import { useNavigate } from 'react-router-dom';
 
 const Img = styled('img')({
   margin: 'auto',
@@ -19,6 +20,12 @@ const Img = styled('img')({
 });
 
 export default function ItemList({ products }: ItemListPropsType) {
+  const navigate = useNavigate();
+
+  function handleClick(item: any) {
+    navigate(`/details/${item.id}`);
+  }
+
   return (
     <Paper
       sx={{
@@ -61,7 +68,7 @@ export default function ItemList({ products }: ItemListPropsType) {
                   </Grid>
                 </Grid>
                 <Grid item>
-                  <ButtonBase sx={{ width: 128, height: 128 }}>
+                  <ButtonBase sx={{ width: 128, height: 128 }} onClick={() => handleClick(product)}>
                     <Img src={product.thumbnail} />
                   </ButtonBase>
                 </Grid>
