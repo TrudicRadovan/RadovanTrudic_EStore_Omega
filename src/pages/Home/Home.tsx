@@ -3,6 +3,7 @@ import ItemList from '../../components/ItemList/ItemList';
 import React from 'react';
 import './Home.css';
 import getAllData from '../../services/getAllData';
+import ImageSlider from '../../components/ImageSlider/ImageSlider';
 
 const Home = () => {
   const { data: products, loading, error } = getAllData(process.env.REACT_APP_API_GET_ALL_PRODUCTS as string);
