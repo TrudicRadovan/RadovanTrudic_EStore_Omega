@@ -6,11 +6,10 @@ import Typography from '@mui/material/Typography';
 import ButtonBase from '@mui/material/ButtonBase';
 import ShoppingCartIconOutlined from '@mui/icons-material/ShoppingCartOutlined';
 import Button from '@mui/material/Button';
-import FavoriteIconOutlined from '@mui/icons-material/FavoriteBorderOutlined';
-import IconButton from '@mui/material/IconButton';
 import './ItemList.css';
 import { ItemListPropsType } from '../../types/ItemListPropsType';
 import { useNavigate } from 'react-router-dom';
+import FavouritesButton from '../FavouritesButton/FavouritesButton';
 
 const Img = styled('img')({
   margin: 'auto',
@@ -60,11 +59,7 @@ export default function ItemList({ products }: ItemListPropsType) {
               >
                 <Grid item container direction="row" justifyContent="flex-end" alignItems="center">
                   <Grid item>
-                    <Typography variant="button">
-                      <IconButton>
-                        <FavoriteIconOutlined />
-                      </IconButton>
-                    </Typography>
+                    <FavouritesButton />
                   </Grid>
                 </Grid>
                 <Grid item>
@@ -100,6 +95,13 @@ export default function ItemList({ products }: ItemListPropsType) {
             </Paper>
           </Grid>
         ))}
+        {products?.length == 0 && (
+          <Grid item>
+            <div>
+              <p>There is no product with this name.</p>
+            </div>
+          </Grid>
+        )}
       </Grid>
     </Paper>
   );
