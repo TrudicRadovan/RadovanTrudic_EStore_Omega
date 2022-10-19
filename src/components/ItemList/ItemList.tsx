@@ -31,26 +31,26 @@ export default function ItemList({ products }: ItemListPropsType) {
     if (state.id == 0) {
       navigate(`/login`);
       alert('You need to be logged in to continue shopping.');
+    } else {
+      fetch('https://dummyjson.com/carts/add', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: state.id,
+          products: [
+            {
+              id: item.id,
+              quantity: 1,
+            },
+          ],
+        }),
+      })
+        .then(res => res.json())
+        .then(res => {
+          console.log(res);
+          alert(`${item.title} added to shopping cart.`);
+        });
     }
-
-    fetch('https://dummyjson.com/carts/add', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        userId: state.id,
-        products: [
-          {
-            id: item.id,
-            quantity: 1,
-          },
-        ],
-      }),
-    })
-      .then(res => res.json())
-      .then(res => {
-        console.log(res);
-        alert(`${item.title} added to shopping cart.`);
-      });
   }
 
   return (

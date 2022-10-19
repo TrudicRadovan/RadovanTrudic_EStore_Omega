@@ -3,7 +3,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import ShoppingCartIconOutlined from '@mui/icons-material/ShoppingCartOutlined';
-import getData from '../../services/getData';
+import getData from '../../hooks/getData';
 import './ProductDetails.css';
 import ImageSlider from '../../components/ImageSlider/ImageSlider';
 import FavouritesButton from '../../components/FavouritesButton/FavouritesButton';

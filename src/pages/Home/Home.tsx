@@ -2,7 +2,7 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 import ItemList from '../../components/ItemList/ItemList';
 import React, { useState } from 'react';
 import './Home.css';
-import getAllData from '../../services/getAllData';
+import getAllData from '../../hooks/getAllData';
 
 const Home = () => {
   const { data: products, loading, error } = getAllData(process.env.REACT_APP_API_GET_ALL_PRODUCTS as string);
