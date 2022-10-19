@@ -1,10 +1,32 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import ProductsDataGrid from '../../components/ProductsDataGrid/ProductsDataGrid';
-import getAllData from '../../services/getAllData';
+import UserContext from '../../contexts/UserContext';
+import CartDTO from '../../dto/CartDTO';
 import './ShoppingCart.css';
 
 const ShoppingCart = () => {
-  const { data: products, loading, error } = getAllData(process.env.REACT_APP_API_GET_ALL_PRODUCTS as string);
+  const [products, setProducts] = useState(new Array<CartDTO>());
+
+  const { setState, state } = useContext<{ setState: any; state: any }>(UserContext);
+
+  useEffect(() => {
+    fetch(`https://dummyjson.com/users/${state.id}/carts`)
+      .then(res => {
+        if (!res.ok) {
+          throw Error('Could not fetch the data for that resource');
+        }
+        return res.json();
+      })
+      .then(res => {
+        console.log(res);
+        for (const cart of res.carts) {
+          setProducts(cart.products);
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <div className="shopping-cart">

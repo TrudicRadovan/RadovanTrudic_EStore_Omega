@@ -1,5 +1,5 @@
-import ProductDTO from '../dto/ProductDTO';
+import CartDTO from '../dto/CartDTO';
 
 export type ProductsDataGridPropsType = {
-  products: Array<ProductDTO>;
+  products: Array<CartDTO>;
 };

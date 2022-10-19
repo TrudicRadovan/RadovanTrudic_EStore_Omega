@@ -1,0 +1,11 @@
+.login .links {
+  margin-left: auto;
+}
+.login a {
+  margin-left: 6px;
+  text-decoration: none;
+}
+.login a:hover {
+  color: white;
+  background-color: inherit;
+}

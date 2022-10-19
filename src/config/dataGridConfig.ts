@@ -1,43 +1,47 @@
-import ProductDTO from '../dto/ProductDTO';
+import CartDTO from '../dto/CartDTO';
 import { DataGridConfigReturnType } from '../types/DataGridConfigReturnType';
 
-function dataGridConfig(products: Array<ProductDTO>): DataGridConfigReturnType {
+function dataGridConfig(products: Array<CartDTO>): DataGridConfigReturnType {
   const columns = [
     { field: 'id', headerName: 'ID', width: 90 },
     {
       field: 'title',
       headerName: 'Title',
-      width: 150,
-    },
-    {
-      field: 'brand',
-      headerName: 'Brand',
-      width: 150,
-    },
-    {
-      field: 'category',
-      headerName: 'Category',
-      width: 110,
+      width: 200,
     },
     {
       field: 'price',
-      headerName: 'Price',
+      headerName: 'Price (€)',
       type: 'number',
       editable: false,
       width: 110,
     },
     {
-      field: 'rating',
-      headerName: 'Rating',
+      field: 'discountPercentage',
+      headerName: 'Discount (%)',
       type: 'number',
       editable: false,
       width: 110,
+    },
+    {
+      field: 'discountedPrice',
+      headerName: 'Discounted Price (€)',
+      type: 'number',
+      editable: false,
+      width: 170,
     },
     {
       field: 'quantity',
       headerName: 'Quantity',
       type: 'number',
       editable: true,
+      width: 110,
+    },
+    {
+      field: 'total',
+      headerName: 'Total (€)',
+      type: 'number',
+      editable: false,
       width: 110,
     },
   ];
@@ -47,11 +51,11 @@ function dataGridConfig(products: Array<ProductDTO>): DataGridConfigReturnType {
     rows.push({
       id: product.id,
       title: product.title,
-      brand: product.brand,
-      category: product.category,
       price: product.price,
-      rating: product.rating,
-      quantity: 1,
+      discountPercentage: product.discountPercentage,
+      discountedPrice: product.discountedPrice,
+      quantity: product.quantity,
+      total: product.total,
     });
   }
 

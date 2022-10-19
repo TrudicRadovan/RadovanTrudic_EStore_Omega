@@ -10,6 +10,7 @@ import './ItemList.css';
 import { ItemListPropsType } from '../../types/ItemListPropsType';
 import { useNavigate } from 'react-router-dom';
 import FavouritesButton from '../FavouritesButton/FavouritesButton';
+import UserContext from '../../contexts/UserContext';
 
 const Img = styled('img')({
   margin: 'auto',
@@ -20,9 +21,36 @@ const Img = styled('img')({
 
 export default function ItemList({ products }: ItemListPropsType) {
   const navigate = useNavigate();
+  const { setState, state } = React.useContext<{ setState: any; state: any }>(UserContext);
 
-  function handleClick(item: any) {
+  function handleClickShowProduct(item: any) {
     navigate(`/details/${item.id}`);
+  }
+
+  function handleClickAddToCart(item: any) {
+    if (state.id == 0) {
+      navigate(`/login`);
+      alert('You need to be logged in to continue shopping.');
+    }
+
+    fetch('https://dummyjson.com/carts/add', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        userId: state.id,
+        products: [
+          {
+            id: item.id,
+            quantity: 1,
+          },
+        ],
+      }),
+    })
+      .then(res => res.json())
+      .then(res => {
+        console.log(res);
+        alert(`${item.title} added to shopping cart.`);
+      });
   }
 
   return (
@@ -63,7 +91,7 @@ export default function ItemList({ products }: ItemListPropsType) {
                   </Grid>
                 </Grid>
                 <Grid item>
-                  <ButtonBase sx={{ width: 128, height: 128 }} onClick={() => handleClick(product)}>
+                  <ButtonBase sx={{ width: 128, height: 128 }} onClick={() => handleClickShowProduct(product)}>
                     <Img src={product.thumbnail} />
                   </ButtonBase>
                 </Grid>
@@ -87,6 +115,7 @@ export default function ItemList({ products }: ItemListPropsType) {
                     variant="contained"
                     startIcon={<ShoppingCartIconOutlined />}
                     sx={{ color: 'white', background: '#00bbff' }}
+                    onClick={() => handleClickAddToCart(product)}
                   >
                     Add to cart
                   </Button>
