@@ -3,6 +3,8 @@ import Mustache from 'mustache';
 import UserContext from '../contexts/UserContext';
 import CartDTO from '../dto/CartDTO';
 import { GetUserCartsReturnType } from '../types/GetUserCartsReturnType';
+import axios from 'axios';
+import instance from '../config/axiosConfig';
 
 export default function useGetUserCarts(): GetUserCartsReturnType {
   const [data, setData] = useState<Array<CartDTO> | null>(null);
@@ -10,18 +12,14 @@ export default function useGetUserCarts(): GetUserCartsReturnType {
   const [error, setError] = useState(null);
   const { setState, state } = useContext<{ setState: any; state: any }>(UserContext);
   const url = Mustache.render(process.env.REACT_APP_API_GET_USER_CARTS as string, { id: state.id });
+  const axiosInstance = instance;
 
   useEffect(() => {
-    fetch(url)
-      .then(res => {
-        if (!res.ok) {
-          throw Error('Could not fetch the data for that resource.');
-        }
-        return res.json();
-      })
+    axios
+      .get(url)
       .then(res => {
         console.log(res);
-        for (const cart of res.carts) {
+        for (const cart of res.data.carts) {
           setData(cart.products);
           setLoading(false);
           setError(null);

@@ -8,24 +8,29 @@ import React from 'react';
 import ProductDetails from './pages/ProductDetails/ProductDetails';
 import Login from './pages/Login/Login';
 import { UserContextProvider } from './contexts/UserContext';
+import { AxiosInterceptor } from './config/axiosConfig';
+import NotFound from './pages/NotFound/NotFound';
 
 function App() {
   return (
     <Router>
       <UserContextProvider>
-        <div className="App">
-          <Navbar />
-          <div className="content">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/cart" element={<ShoppingCart />} />
-              <Route path="/favourites" element={<Favourites />} />
-              <Route path="/user" element={<UserProfile />} />
-              <Route path="/details/:id" element={<ProductDetails />} />
-            </Routes>
+        <AxiosInterceptor>
+          <div className="App">
+            <Navbar />
+            <div className="content">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/cart" element={<ShoppingCart />} />
+                <Route path="/favourites" element={<Favourites />} />
+                <Route path="/user" element={<UserProfile />} />
+                <Route path="/details/:id" element={<ProductDetails />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </div>
           </div>
-        </div>
+        </AxiosInterceptor>
       </UserContextProvider>
     </Router>
   );
