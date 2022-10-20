@@ -2,14 +2,14 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { GetAllDataReturnType } from '../types/GetAllDataReturnType';
 
-export default function getAllData(url: string): GetAllDataReturnType {
+export default function getAllData(): GetAllDataReturnType {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     axios
-      .get(url)
+      .get(process.env.REACT_APP_API_GET_ALL_PRODUCTS as string)
       .then(res => {
         console.log(res.data.products);
         setData(res.data.products);
@@ -23,7 +23,7 @@ export default function getAllData(url: string): GetAllDataReturnType {
         setError(err.message);
         console.log(err);
       });
-  }, [url]);
+  }, []);
 
   return { data, loading, error };
 }

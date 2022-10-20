@@ -9,15 +9,11 @@ import { SearchBarPropsType } from '../../types/SearchBarPropsType';
 const SearchBar = ({ setFilteredData, products }: SearchBarPropsType) => {
   const handleFilter = (event: any) => {
     const searchWord = event.target.value;
-
-    const newFilter = products.filter(value => {
-      return value.title.includes(searchWord);
-    });
-
-    if (searchWord.trim() === '') {
-      setFilteredData(products);
-    } else {
+    if (searchWord.trim() !== '') {
+      const newFilter = products.filter(value => value.title.includes(searchWord.trim()));
       setFilteredData(newFilter);
+    } else {
+      setFilteredData(products);
     }
   };
 

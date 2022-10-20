@@ -1,36 +1,27 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import ProductsDataGrid from '../../components/ProductsDataGrid/ProductsDataGrid';
-import UserContext from '../../contexts/UserContext';
-import CartDTO from '../../dto/CartDTO';
 import './ShoppingCart.css';
+import useGetUserCarts from '../../hooks/useGetUserCarts';
+import { useNavigate } from 'react-router-dom';
+import UserContext from '../../contexts/UserContext';
 
 const ShoppingCart = () => {
-  const [products, setProducts] = useState(new Array<CartDTO>());
-
   const { setState, state } = useContext<{ setState: any; state: any }>(UserContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`https://dummyjson.com/users/${state.id}/carts`)
-      .then(res => {
-        if (!res.ok) {
-          throw Error('Could not fetch the data for that resource');
-        }
-        return res.json();
-      })
-      .then(res => {
-        console.log(res);
-        for (const cart of res.carts) {
-          setProducts(cart.products);
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    if (state.id === 0) {
+      navigate('/login');
+    }
   }, []);
+
+  const { data: products, loading, error } = useGetUserCarts();
 
   return (
     <div className="shopping-cart">
       <h1>Shopping Cart</h1>
+      {error && <div>{error}</div>}
+      {loading && <div>Loading...</div>}
       {products && <ProductsDataGrid products={products} />}
     </div>
   );

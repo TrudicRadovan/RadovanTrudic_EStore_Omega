@@ -1,22 +1,20 @@
 /* eslint-disable */
 import { Button, FormControl, Grid, IconButton, InputAdornment, OutlinedInput, Paper } from '@mui/material';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import './Login.css';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { VisibilityOff, Visibility } from '@mui/icons-material';
-import { Link, useNavigate } from 'react-router-dom';
-import UserContext from '../../contexts/UserContext';
+import { Link } from 'react-router-dom';
 import State from '../../interfaces/State';
+import useLogin from '../../hooks/useLogin';
 
 const Login = () => {
-  const { setState, state } = useContext<{ setState: any; state: any }>(UserContext);
   const [value, setValue] = useState('');
   const [values, setValues] = useState<State>({
     password: '',
     showPassword: false,
   });
-
-  const navigate = useNavigate();
+  const { login } = useLogin(value, values.password);
 
   const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -32,33 +30,6 @@ const Login = () => {
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
-
-  function handleClick() {
-    fetch('https://dummyjson.com/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        username: value,
-        password: values.password,
-        // expiresInMins: 60, // optional
-      }),
-    })
-      .then(res => {
-        if (!res.ok) {
-          throw Error('Could not fetch the data for that resource');
-        }
-        return res.json();
-      })
-      .then(res => {
-        console.log(res);
-        setState(res);
-        navigate(`/`);
-      })
-      .catch(err => {
-        console.log(err);
-        alert('Incorect username or password. Please try again.');
-      });
-  }
 
   return (
     <div className="login">
@@ -129,7 +100,7 @@ const Login = () => {
             <Button
               variant="text"
               sx={{ color: 'white', maxWidth: 300, fontFamily: 'Quicksand', fontSize: 16 }}
-              onClick={() => handleClick()}
+              onClick={login}
             >
               Sign In
             </Button>

@@ -1,18 +1,19 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { GetDataReturnType } from '../types/GetDataReturnType';
+import ProductDTO from '../dto/ProductDTO';
 
-export default function getData(url: string): GetDataReturnType {
-  const [data, setData] = useState(null);
+export default function getData(id: string): GetDataReturnType {
+  const [data, setData] = useState<ProductDTO | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     axios
-      .get(url)
-      .then(res => {
-        console.log(res.data);
-        setData(res.data);
+      .get(process.env.REACT_APP_API_GET_PRODUCT + id)
+      .then(({ data }: AxiosResponse<ProductDTO>) => {
+        console.log(data);
+        setData(data);
         setLoading(false);
         setError(null);
         console.log('GetData successed!');
@@ -23,7 +24,7 @@ export default function getData(url: string): GetDataReturnType {
         setError(err.message);
         console.log(err);
       });
-  }, [url]);
+  }, []);
 
   return { data, loading, error };
 }

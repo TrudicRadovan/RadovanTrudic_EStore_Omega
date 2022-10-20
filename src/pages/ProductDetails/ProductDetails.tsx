@@ -3,7 +3,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import ShoppingCartIconOutlined from '@mui/icons-material/ShoppingCartOutlined';
-import getData from '../../hooks/getData';
+import getData from '../../hooks/useGetData';
 import './ProductDetails.css';
 import ImageSlider from '../../components/ImageSlider/ImageSlider';
 import FavouritesButton from '../../components/FavouritesButton/FavouritesButton';
@@ -17,7 +17,7 @@ const Img = styled('img')({
 
 const ProductDetails = () => {
   const { id } = useParams();
-  const { data: product, loading, error } = getData('https://dummyjson.com/products/' + id);
+  const { data: product, loading, error } = getData(id as string);
   const navigate = useNavigate();
 
   return (
