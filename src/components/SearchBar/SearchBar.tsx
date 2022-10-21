@@ -10,7 +10,12 @@ const SearchBar = ({ setFilteredData, products }: SearchBarPropsType) => {
   const handleFilter = (event: any) => {
     const searchWord = event.target.value;
     if (searchWord.trim() !== '') {
-      const newFilter = products.filter(value => value.title.includes(searchWord.trim()));
+      const newFilter = products.filter(
+        value =>
+          value.title.includes(searchWord.trim()) ||
+          value.brand.includes(searchWord.trim()) ||
+          value.category.includes(searchWord.trim())
+      );
       setFilteredData(newFilter);
     } else {
       setFilteredData(products);

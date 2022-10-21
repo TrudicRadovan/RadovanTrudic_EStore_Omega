@@ -7,6 +7,7 @@ import { VisibilityOff, Visibility } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import State from '../../interfaces/State';
 import useLogin from '../../hooks/useLogin';
+import LoginFormik from './LoginFormik';
 
 const Login = () => {
   const [value, setValue] = useState('');
@@ -14,7 +15,7 @@ const Login = () => {
     password: '',
     showPassword: false,
   });
-  const { login } = useLogin(value, values.password);
+  // const { login } = useLogin(value, values.password);
 
   const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -57,53 +58,7 @@ const Login = () => {
             </div>
           </Grid>
           <Grid item>
-            <FormControl variant="outlined">
-              <OutlinedInput
-                required
-                id="my-input"
-                type="text"
-                sx={{ color: 'white', width: 300, fontFamily: 'Quicksand' }}
-                placeholder="Username"
-                value={value}
-                onChange={e => {
-                  setValue(e.target.value);
-                }}
-              />
-            </FormControl>
-          </Grid>
-          <Grid item>
-            <FormControl variant="outlined">
-              <OutlinedInput
-                required
-                id="outlined-adornment-password"
-                placeholder="Password"
-                type={values.showPassword ? 'text' : 'password'}
-                sx={{ color: 'white', width: 300, fontFamily: 'Quicksand' }}
-                value={values.password}
-                onChange={handleChange('password')}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                    >
-                      {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-              />
-            </FormControl>
-          </Grid>
-          <Grid item>
-            <Button
-              variant="text"
-              sx={{ color: 'white', maxWidth: 300, fontFamily: 'Quicksand', fontSize: 16 }}
-              onClick={login}
-            >
-              Sign In
-            </Button>
+            <LoginFormik></LoginFormik>
           </Grid>
           <Grid item container direction="row" justifyContent="center" alignItems="center">
             <Grid item>
