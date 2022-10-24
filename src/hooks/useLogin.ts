@@ -25,6 +25,7 @@ export default function useLogin(): { login: (username: string, password: string
       .then(res => {
         console.log(res);
         setState(res);
+        localStorage.setItem('user', res.token);
         navigate('/');
       })
       .catch(err => {

@@ -10,7 +10,6 @@ const AxiosInterceptor = ({ children }: any) => {
   const [isSet, setIsSet] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
-    //debugger; // eslint-disable-line no-debugger
     const resInterceptor = ({ response }: any) => {
       return response;
     };

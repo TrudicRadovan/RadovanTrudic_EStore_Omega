@@ -124,6 +124,7 @@ export default function ItemList({ products }: ItemListPropsType) {
             </Paper>
           </Grid>
         ))}
+
         {products?.length == 0 && (
           <Grid item>
             <div>
