@@ -15,7 +15,7 @@ export default function useGetUserCarts(): GetUserCartsReturnType {
   const axiosInstance = instance;
 
   useEffect(() => {
-    axios
+    axiosInstance
       .get(url)
       .then(res => {
         console.log(res);

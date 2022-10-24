@@ -16,6 +16,7 @@ const AxiosInterceptor = ({ children }: any) => {
     };
 
     const errInterceptor = (error: any) => {
+      console.log(error?.response?.status);
       if (error?.response?.status == 404) {
         navigate('/login');
       }
@@ -23,6 +24,7 @@ const AxiosInterceptor = ({ children }: any) => {
     };
 
     const interceptor = instance.interceptors.response.use(resInterceptor, errInterceptor);
+
     setIsSet(true);
     return () => instance.interceptors.response.eject(interceptor);
   });

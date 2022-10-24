@@ -1,37 +1,12 @@
 /* eslint-disable */
-import { Button, FormControl, Grid, IconButton, InputAdornment, OutlinedInput, Paper } from '@mui/material';
-import React, { useState } from 'react';
+import { Grid, IconButton, Paper } from '@mui/material';
+import React from 'react';
 import './Login.css';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { VisibilityOff, Visibility } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
-import State from '../../interfaces/State';
-import useLogin from '../../hooks/useLogin';
 import LoginFormik from './LoginFormik';
 
 const Login = () => {
-  const [value, setValue] = useState('');
-  const [values, setValues] = useState<State>({
-    password: '',
-    showPassword: false,
-  });
-  // const { login } = useLogin(value, values.password);
-
-  const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
-
-  const handleClickShowPassword = () => {
-    setValues({
-      ...values,
-      showPassword: !values.showPassword,
-    });
-  };
-
-  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-  };
-
   return (
     <div className="login">
       <Paper
