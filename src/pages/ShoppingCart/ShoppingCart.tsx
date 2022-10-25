@@ -7,15 +7,14 @@ import UserContext from '../../contexts/UserContext';
 
 const ShoppingCart = () => {
   const { setState, state } = useContext<{ setState: any; state: any }>(UserContext);
+  const { data: products, loading, error } = useGetUserCarts();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (state.id === 0) {
+    if (state == null) {
       navigate('/login');
     }
   }, []);
-
-  const { data: products, loading, error } = useGetUserCarts();
 
   return (
     <div className="shopping-cart">

@@ -11,10 +11,14 @@ export default function useGetUserCarts(): GetUserCartsReturnType {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { setState, state } = useContext<{ setState: any; state: any }>(UserContext);
-  const url = Mustache.render(process.env.REACT_APP_API_GET_USER_CARTS as string, { id: state.id });
   const axiosInstance = instance;
+  let url = '';
 
   useEffect(() => {
+    if (state != null) {
+      url = Mustache.render(process.env.REACT_APP_API_GET_USER_CARTS as string, { id: state.id });
+    }
+
     axios
       .get(url)
       .then(res => {

@@ -28,7 +28,7 @@ export default function ItemList({ products }: ItemListPropsType) {
   }
 
   function handleClickAddToCart(item: any) {
-    if (state.id == 0) {
+    if (state == null) {
       navigate(`/login`);
       alert('You need to be logged in to continue shopping.');
     } else {
@@ -101,13 +101,8 @@ export default function ItemList({ products }: ItemListPropsType) {
                   </Typography>
                 </Grid>
                 <Grid item>
-                  <Typography gutterBottom variant="body2">
-                    Price • {product.price} €
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography variant="body2" color="text.secondary">
-                    ID: {product.id}
+                  <Typography gutterBottom variant="body1">
+                    <strong>{product.price} €</strong>
                   </Typography>
                 </Grid>
                 <Grid item paddingBottom={2}>

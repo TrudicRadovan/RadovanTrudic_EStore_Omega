@@ -4,10 +4,10 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ShoppingCart from './pages/ShoppingCart/ShoppingCart';
 import Favourites from './pages/Favourites/Favourites';
 import UserProfile from './pages/UserProfile/UserProfile';
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import ProductDetails from './pages/ProductDetails/ProductDetails';
 import Login from './pages/Login/Login';
-import { UserContextProvider } from './contexts/UserContext';
+import UserContext, { UserContextProvider } from './contexts/UserContext';
 import { AxiosInterceptor } from './config/axiosConfig';
 import NotFound from './pages/NotFound/NotFound';
 
