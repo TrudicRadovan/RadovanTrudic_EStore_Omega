@@ -11,6 +11,9 @@ import { ItemListPropsType } from '../../types/ItemListPropsType';
 import { useNavigate } from 'react-router-dom';
 import FavouritesButton from '../FavouritesButton/FavouritesButton';
 import UserContext from '../../contexts/UserContext';
+import InfiniteScroll from 'react-infinite-scroller';
+import useGetFewProducts from '../../hooks/useGetFewProducts';
+import getFewProducts from '../../hooks/getFewProducts';
 
 const Img = styled('img')({
   margin: 'auto',

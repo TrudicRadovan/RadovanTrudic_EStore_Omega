@@ -3,9 +3,10 @@ import ItemList from '../../components/ItemList/ItemList';
 import React, { useState } from 'react';
 import './Home.css';
 import getAllData from '../../hooks/useGetAllData';
+import useGetFewProducts from '../../hooks/useGetFewProducts';
 
 const Home = () => {
-  const { data: products, loading, error } = getAllData();
+  const { data: products, loading, error } = getAllData(); //useGetFewProducts();
   const [filteredData, setFilteredData] = useState(products);
 
   return (
