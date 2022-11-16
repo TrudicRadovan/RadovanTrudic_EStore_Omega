@@ -11,9 +11,6 @@ import { ItemListPropsType } from '../../types/ItemListPropsType';
 import { useNavigate } from 'react-router-dom';
 import FavouritesButton from '../FavouritesButton/FavouritesButton';
 import UserContext from '../../contexts/UserContext';
-import InfiniteScroll from 'react-infinite-scroller';
-import useGetFewProducts from '../../hooks/useGetFewProducts';
-import getFewProducts from '../../hooks/getFewProducts';
 
 const Img = styled('img')({
   margin: 'auto',
@@ -22,7 +19,7 @@ const Img = styled('img')({
   maxHeight: '100%',
 });
 
-export default function ItemList({ products }: ItemListPropsType) {
+export default React.memo(function ItemList({ products }: ItemListPropsType) {
   const navigate = useNavigate();
   const { setState, state } = React.useContext<{ setState: any; state: any }>(UserContext);
 
@@ -133,4 +130,4 @@ export default function ItemList({ products }: ItemListPropsType) {
       </Grid>
     </Paper>
   );
-}
+});

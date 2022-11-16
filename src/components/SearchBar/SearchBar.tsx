@@ -2,13 +2,20 @@ import SearchIcon from '@mui/icons-material/Search';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 import OutlinedInput from '@mui/material/OutlinedInput';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './SearchBar.css';
 import { SearchBarPropsType } from '../../types/SearchBarPropsType';
+import useDebounce from '../../hooks/useDebounce';
 
 const SearchBar = ({ setFilteredData, products }: SearchBarPropsType) => {
+  const [search, setSearch] = useState('');
+  const searchWord = useDebounce(search, 1000);
+
   const handleFilter = (event: any) => {
-    const searchWord = event.target.value;
+    setSearch(event.target.value);
+  };
+
+  useEffect(() => {
     if (searchWord.trim() !== '') {
       const newFilter = products.filter(
         value =>
@@ -20,7 +27,7 @@ const SearchBar = ({ setFilteredData, products }: SearchBarPropsType) => {
     } else {
       setFilteredData(products);
     }
-  };
+  }, [searchWord]);
 
   return (
     <div className="search-bar">
