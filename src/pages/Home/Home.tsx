@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import './Home.css';
 import getAllData from '../../hooks/useGetAllData';
 import useGetFewProducts from '../../hooks/useGetFewProducts';
-import FilterSelect from '../../components/FilterSelect/FilterSelect';
+import SortSelect from '../../components/SortSelect/SortSelect';
 
 const Home = () => {
   const { data: products, loading, error } = getAllData(); //useGetFewProducts();
@@ -16,7 +16,7 @@ const Home = () => {
       {error && <div>{error}</div>}
       {loading && <div>Loading...</div>}
       {products && <SearchBar setFilteredData={setFilteredData} products={products} />}
-      {products && <FilterSelect />}
+      {products && <SortSelect />}
       {products && !filteredData && <ItemList products={products} />}
       {products && filteredData && <ItemList products={filteredData} />}
     </div>

@@ -3,7 +3,7 @@ import React from 'react';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import SortIcon from '@mui/icons-material/Sort';
 
-const FilterSelect = () => {
+const SortSelect = () => {
   const options = [
     {
       value: 'Higher Price',
@@ -54,4 +54,4 @@ const FilterSelect = () => {
   );
 };
 
-export default FilterSelect;
+export default SortSelect;
