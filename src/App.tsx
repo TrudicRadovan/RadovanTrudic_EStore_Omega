@@ -10,6 +10,7 @@ import Login from './pages/Login/Login';
 import UserContext, { UserContextProvider } from './contexts/UserContext';
 import { AxiosInterceptor } from './config/axiosConfig';
 import NotFound from './pages/NotFound/NotFound';
+import ChatRoom from './pages/ChatRoom/ChatRoom';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <div className="content">
               <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/chat" element={<ChatRoom />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/cart" element={<ShoppingCart />} />
                 <Route path="/favourites" element={<Favourites />} />
