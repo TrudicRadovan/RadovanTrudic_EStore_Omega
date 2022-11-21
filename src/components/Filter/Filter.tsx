@@ -16,7 +16,7 @@ import SortIcon from '@mui/icons-material/Sort';
 const Filter = () => {
   return (
     <>
-      <IconButton color="primary">
+      <IconButton color="primary" size="large">
         <FilterListIcon />
       </IconButton>
     </>

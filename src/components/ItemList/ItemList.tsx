@@ -96,12 +96,19 @@ export default React.memo(function ItemList({ products }: ItemListPropsType) {
                   </ButtonBase>
                 </Grid>
                 <Grid item>
-                  <Typography gutterBottom variant="body1" component="div" flexGrow="1" textAlign="center">
+                  <Typography
+                    gutterBottom
+                    variant="body1"
+                    component="div"
+                    flexGrow="1"
+                    textAlign="center"
+                    fontFamily="Quicksand"
+                  >
                     {product.title}
                   </Typography>
                 </Grid>
                 <Grid item>
-                  <Typography gutterBottom variant="body1">
+                  <Typography gutterBottom variant="body1" fontFamily="Quicksand">
                     <strong>{product.price} €</strong>
                   </Typography>
                 </Grid>
