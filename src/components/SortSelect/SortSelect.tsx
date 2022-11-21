@@ -36,7 +36,7 @@ const SortSelect = () => {
                   <SvgIcon color="primary">
                     <SortIcon />
                   </SvgIcon>
-                  <p>Sort by:</p>
+
                   {value}
                 </>
               </Box>
