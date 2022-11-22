@@ -29,6 +29,7 @@ const SortSelect = () => {
         <Select
           defaultValue=""
           displayEmpty
+          sx={{ boxShadow: 'none', '.MuiOutlinedInput-notchedOutline': { border: 0 } }}
           renderValue={value => {
             return (
               <Box sx={{ display: 'flex', gap: 1 }}>

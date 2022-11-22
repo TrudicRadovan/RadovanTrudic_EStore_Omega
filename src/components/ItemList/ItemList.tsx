@@ -54,87 +54,85 @@ export default React.memo(function ItemList({ products }: ItemListPropsType) {
   }
 
   return (
-    <Paper
+    <Grid
+      container
+      spacing={3}
+      direction="row"
+      justifyContent="center"
+      alignItems="flex-start"
       sx={{
-        paddingTop: 7,
-        paddingBottom: 7,
-        margin: 'auto',
-        maxWidth: 1000,
-        flexGrow: 1,
-        backgroundColor: theme => (theme.palette.mode === 'dark' ? '#1A2027' : '#fff'),
+        paddingTop: 5,
       }}
     >
-      <Grid container spacing={3} direction="row" justifyContent="center" alignItems="flex-start">
-        {products.map(product => (
-          <Grid item lg={3} container key={product.id}>
-            <Paper
-              sx={{
-                margin: 'auto',
-                maxWidth: 200,
-                flexGrow: 1,
-                backgroundColor: theme => (theme.palette.mode === 'dark' ? '#1A2027' : '#fff'),
-              }}
+      {products.map(product => (
+        <Grid item lg={3} container key={product.id}>
+          <Paper
+            sx={{
+              margin: 'auto',
+              maxWidth: 200,
+              flexGrow: 1,
+              backgroundColor: theme => (theme.palette.mode === 'dark' ? '#1A2027' : '#fff'),
+            }}
+          >
+            <Grid
+              item
+              lg={12}
+              container
+              direction="column"
+              justifyContent="center"
+              alignItems="center"
+              spacing={0.5}
+              maxHeight="400px"
             >
-              <Grid
-                item
-                lg={12}
-                container
-                direction="column"
-                justifyContent="center"
-                alignItems="center"
-                spacing={0.5}
-                maxHeight="400px"
-              >
-                <Grid item container direction="row" justifyContent="flex-end" alignItems="center">
-                  <Grid item>
-                    <FavouritesButton />
-                  </Grid>
-                </Grid>
+              <Grid item container direction="row" justifyContent="flex-end" alignItems="center">
                 <Grid item>
-                  <ButtonBase sx={{ width: 128, height: 128 }} onClick={() => handleClickShowProduct(product)}>
-                    <Img src={product.thumbnail} />
-                  </ButtonBase>
-                </Grid>
-                <Grid item>
-                  <Typography
-                    gutterBottom
-                    variant="body1"
-                    component="div"
-                    flexGrow="1"
-                    textAlign="center"
-                    fontFamily="Quicksand"
-                  >
-                    {product.title}
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography gutterBottom variant="body1" fontFamily="Quicksand">
-                    <strong>{product.price} €</strong>
-                  </Typography>
-                </Grid>
-                <Grid item paddingBottom={2}>
-                  <Button
-                    variant="contained"
-                    startIcon={<ShoppingCartIconOutlined />}
-                    sx={{ color: 'white', background: '#00bbff' }}
-                    onClick={() => handleClickAddToCart(product)}
-                  >
-                    Add to cart
-                  </Button>
+                  <FavouritesButton />
                 </Grid>
               </Grid>
-            </Paper>
-          </Grid>
-        ))}
+              <Grid item>
+                <ButtonBase sx={{ width: 128, height: 128 }} onClick={() => handleClickShowProduct(product)}>
+                  <Img src={product.thumbnail} />
+                </ButtonBase>
+              </Grid>
+              <Grid item>
+                <Typography
+                  gutterBottom
+                  variant="body1"
+                  component="div"
+                  flexGrow="1"
+                  textAlign="center"
+                  fontFamily="Quicksand"
+                >
+                  {product.title}
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Typography gutterBottom variant="body1" fontFamily="Quicksand">
+                  <strong>{product.price} €</strong>
+                </Typography>
+              </Grid>
+              <Grid item paddingBottom={2}>
+                <Button
+                  variant="contained"
+                  startIcon={<ShoppingCartIconOutlined />}
+                  sx={{ color: 'white', background: '#00bbff' }}
+                  onClick={() => handleClickAddToCart(product)}
+                >
+                  Add to cart
+                </Button>
+              </Grid>
+            </Grid>
+          </Paper>
+        </Grid>
+      ))}
 
-        {products?.length == 0 && (
-          <Grid item>
-            <div>
-              <p>There is no product with this name.</p>
-            </div>
-          </Grid>
-        )}
-      </Grid>
-    </Paper>
+      {products?.length == 0 && (
+        <Grid item>
+          <div>
+            <p>There is no product with this name.</p>
+          </div>
+        </Grid>
+      )}
+    </Grid>
   );
 });
