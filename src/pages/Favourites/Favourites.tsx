@@ -16,10 +16,12 @@ const Img = styled('img')({
   maxHeight: '100%',
 });
 
+const LIMIT = 16;
+
 const Favourites = () => {
   const [loading, setLoading] = useState(true);
   const [allData, setAllData] = useState(initialState);
-  const [pageNum, setPageNum] = useState(1);
+  const [pageNum, setPageNum] = useState(0);
   const [lastElement, setLastElement] = useState(null);
 
   const observer = useRef(
@@ -33,7 +35,7 @@ const Favourites = () => {
 
   const callData = async () => {
     setLoading(true);
-    let response = await axios.get(`https://dummyjson.com/products?limit=${pageNum * 16}&skip=0`);
+    let response = await axios.get(`https://dummyjson.com/products?limit=${LIMIT}&skip=${pageNum * LIMIT}`);
     console.log(response);
     let all = new Set([...allData, ...response.data.products]);
     console.log(all);

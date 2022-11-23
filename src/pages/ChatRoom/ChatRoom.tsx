@@ -15,6 +15,7 @@ const ChatRoom = () => {
   const { setState, state } = React.useContext<{ setState: any; state: any }>(UserContext);
 
   const onButtonClicked = (value: any) => {
+    console.log(messages);
     client.send(
       JSON.stringify({
         type: 'message',
@@ -44,6 +45,16 @@ const ChatRoom = () => {
             type: dataFromServer.type,
           },
         ]);
+        /*console.log(messages);
+        setMessages([
+          ...messages,
+          {
+            timestamp: dataFromServer.timestamp,
+            user: dataFromServer.user,
+            msg: dataFromServer.msg,
+            type: dataFromServer.type,
+          },
+        ]);*/
       }
     };
   }, []);
