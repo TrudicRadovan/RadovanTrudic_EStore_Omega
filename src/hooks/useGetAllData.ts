@@ -9,7 +9,7 @@ export default function getAllData(): GetAllDataReturnType {
 
   useEffect(() => {
     axios
-      .get(process.env.REACT_APP_API_GET_ALL_PRODUCTS as string)
+      .get('https://dummyjson.com/products?limit=96&skip=0')
       .then(res => {
         console.log(res.data.products);
         setData(res.data.products);
