@@ -67,7 +67,7 @@ const Home = () => {
               justifyContent="flex-start"
               alignItems="flex-start"
             >
-              <SortSelect />
+              <SortSelect setFilteredData={setFilteredData} />
             </Grid>
             <Grid item container maxWidth={'50%'} direction="column" justifyContent="flex-start" alignItems="flex-end">
               <Filter />
