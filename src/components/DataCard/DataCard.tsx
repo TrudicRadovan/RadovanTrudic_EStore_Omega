@@ -75,14 +75,13 @@ export default function DataCard({ product }: DataCardPropsType) {
             component="div"
             flexGrow="1"
             textAlign="center"
-            fontFamily="Quicksand"
             overflow="hidden"
           >
             {product.title}
           </Typography>
         </Grid>
         <Grid item>
-          <Typography gutterBottom variant="body1" fontFamily="Quicksand">
+          <Typography gutterBottom variant="body1">
             <strong>{product.price} €</strong>
           </Typography>
         </Grid>

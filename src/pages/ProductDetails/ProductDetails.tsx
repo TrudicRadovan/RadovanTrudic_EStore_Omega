@@ -42,41 +42,34 @@ const ProductDetails = () => {
             </Grid>
             <Grid item>
               <Grid item>
-                <Typography
-                  gutterBottom
-                  variant="h4"
-                  component="div"
-                  flexGrow="1"
-                  textAlign="center"
-                  fontFamily="Quicksand"
-                >
+                <Typography gutterBottom variant="h4" component="div" flexGrow="1" textAlign="center">
                   {product.title}
                 </Typography>
               </Grid>
             </Grid>
             <Grid item>
-              <Typography gutterBottom variant="h5" fontFamily="Quicksand">
+              <Typography gutterBottom variant="h5">
                 {product.price} €
               </Typography>
             </Grid>
             <Grid item>
-              <Typography variant="body1" color="text.secondary" fontFamily="Quicksand">
+              <Typography variant="body1" color="text.secondary">
                 ID: {product.id}
               </Typography>
             </Grid>
             <Grid item>
-              <Typography gutterBottom variant="h6" fontFamily="Quicksand">
+              <Typography gutterBottom variant="h6">
                 Category: {product.category}
               </Typography>
             </Grid>
             <Grid item>
-              <Typography gutterBottom variant="h6" fontFamily="Quicksand">
+              <Typography gutterBottom variant="h6">
                 Brand: {product.brand}
               </Typography>
             </Grid>
             <Grid item container direction="row" justifyContent="flex-start" alignItems="center">
               <Grid item>
-                <Typography gutterBottom variant="h6" fontFamily="Quicksand">
+                <Typography gutterBottom variant="h6">
                   Rating:
                 </Typography>
               </Grid>
@@ -85,7 +78,7 @@ const ProductDetails = () => {
               </Grid>
             </Grid>
             <Grid item>
-              <Typography gutterBottom variant="h6" fontFamily="Quicksand">
+              <Typography gutterBottom variant="h6">
                 Description: {product.description}
               </Typography>
             </Grid>

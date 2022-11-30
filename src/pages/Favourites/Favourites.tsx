@@ -96,19 +96,12 @@ const Favourites = () => {
               </ButtonBase>
             </Grid>
             <Grid item>
-              <Typography
-                gutterBottom
-                variant="body1"
-                component="div"
-                flexGrow="1"
-                textAlign="center"
-                fontFamily="Quicksand"
-              >
+              <Typography gutterBottom variant="body1" component="div" flexGrow="1" textAlign="center">
                 {data.title}
               </Typography>
             </Grid>
             <Grid item>
-              <Typography gutterBottom variant="body1" fontFamily="Quicksand">
+              <Typography gutterBottom variant="body1">
                 <strong>{data.price} €</strong>
               </Typography>
             </Grid>
