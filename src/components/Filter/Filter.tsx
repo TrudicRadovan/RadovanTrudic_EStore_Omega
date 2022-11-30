@@ -13,30 +13,75 @@ import {
   ListItemIcon,
   ListItemText,
   SwipeableDrawer,
+  Switch,
   Typography,
 } from '@mui/material';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CategoryIcon from '@mui/icons-material/Category';
 import DatasetIcon from '@mui/icons-material/Dataset';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import RangeSlider from '../RangeSlider/RangeSlider';
-import { ExpandLess, ExpandMore, StarBorder } from '@mui/icons-material';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
+import useDebounce from '../../hooks/useDebounce';
+import getAllData from '../../hooks/useGetAllData';
+import { SearchBarPropsType } from '../../types/SearchBarPropsType';
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
-export default function Filter() {
-  const [state, setState] = React.useState({
+export default function Filter({ setFilteredData }: SearchBarPropsType) {
+  const [state, setState] = useState({
     top: false,
     left: false,
     bottom: false,
     right: false,
   });
-  const [open, setOpen] = React.useState(true);
-  const [open1, setOpen1] = React.useState(true);
-  const [open2, setOpen2] = React.useState(true);
-  const [open3, setOpen3] = React.useState(true);
+  const [open, setOpen] = useState(true);
+  const [open1, setOpen1] = useState(true);
+  const [open2, setOpen2] = useState(true);
+  const [open3, setOpen3] = useState(true);
+  const [brands, setBrands] = useState<any[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
+  const [minPrice, setMinPrice] = useState(100);
+  const [maxPrice, setMaxPrice] = useState(0);
+  const [filter, setFilter] = useState('');
+  const filterKey = useDebounce(filter, 1000);
+  const { data: allProducts, loading, error } = getAllData();
+
+  useEffect(() => {
+    if (filter != '') {
+      const newFilter = allProducts?.filter(
+        value => value.title.includes('S') || value.brand.includes('S') || value.category.includes('S')
+      );
+      setFilteredData([...newFilter!]);
+    } else {
+      setFilteredData(null);
+    }
+  }, [filterKey]);
+
+  useEffect(() => {
+    let min = 1000;
+    let max = 0;
+
+    allProducts?.forEach(product => {
+      if (!brands.includes(product.brand)) {
+        brands.push(product.brand);
+      }
+      if (!categories.includes(product.category)) {
+        categories.push(product.category);
+      }
+      if (min > product.price) {
+        min = product.price;
+      }
+      if (max < product.price) {
+        max = product.price;
+      }
+    });
+
+    setMinPrice(min);
+    setMaxPrice(max);
+  }, [allProducts]);
 
   const toggleDrawer = (anchor: Anchor, open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
     if (
@@ -64,7 +109,11 @@ export default function Filter() {
       ),
       callback: setOpen,
       open: open,
-      items: <></>,
+      items: (
+        <>
+          <Switch></Switch>
+        </>
+      ),
     },
     {
       name: 'Category',
@@ -77,12 +126,15 @@ export default function Filter() {
       open: open1,
       items: (
         <>
-          <FormControlLabel control={<Checkbox />} label="smartphones" labelPlacement="end" />
-          <FormControlLabel control={<Checkbox />} label="laptops" labelPlacement="end" />
-          <FormControlLabel control={<Checkbox />} label="fragrances" labelPlacement="end" />
-          <FormControlLabel control={<Checkbox />} label="groceries" labelPlacement="end" />
-          <FormControlLabel control={<Checkbox />} label="skincare" labelPlacement="end" />
-          <FormControlLabel control={<Checkbox />} label="furniture" labelPlacement="end" />
+          {categories.map(category => (
+            <FormControlLabel
+              control={<Checkbox size="small" />}
+              label={category}
+              labelPlacement="end"
+              key={category}
+              sx={{ maxWidth: 200, marginLeft: 5 }}
+            />
+          ))}
         </>
       ),
     },
@@ -97,9 +149,15 @@ export default function Filter() {
       open: open2,
       items: (
         <>
-          <FormControlLabel control={<Checkbox />} label="Apple" labelPlacement="end" />
-          <FormControlLabel control={<Checkbox />} label="Samsung" labelPlacement="end" />
-          <FormControlLabel control={<Checkbox />} label="Xiaomi" labelPlacement="end" />
+          {brands.map(brand => (
+            <FormControlLabel
+              control={<Checkbox size="small" />}
+              label={brand}
+              labelPlacement="end"
+              key={brand}
+              sx={{ maxWidth: 200, marginLeft: 9 }}
+            />
+          ))}
         </>
       ),
     },
@@ -114,7 +172,7 @@ export default function Filter() {
       open: open3,
       items: (
         <>
-          <RangeSlider></RangeSlider>
+          <RangeSlider min={minPrice} max={maxPrice}></RangeSlider>
         </>
       ),
     },
@@ -127,7 +185,7 @@ export default function Filter() {
           Filter
         </Typography>
         <List>
-          {FilterOptions.map((option, index) => (
+          {FilterOptions.map(option => (
             <ListItem key={option.name} disablePadding>
               <Grid container direction="column" justifyContent="center" alignItems="center">
                 <ListItemButton onClick={() => handleClick(option.callback, option.open)} sx={{ minWidth: 200 }}>

@@ -70,7 +70,7 @@ const Home = () => {
               <SortSelect setFilteredData={setFilteredData} />
             </Grid>
             <Grid item container maxWidth={'50%'} direction="column" justifyContent="flex-start" alignItems="flex-end">
-              <Filter />
+              <Filter setFilteredData={setFilteredData} />
             </Grid>
           </Grid>
         </>
