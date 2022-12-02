@@ -2,9 +2,7 @@
 import {
   Box,
   Button,
-  Checkbox,
   Collapse,
-  FormControlLabel,
   Grid,
   IconButton,
   List,
@@ -13,20 +11,16 @@ import {
   ListItemIcon,
   ListItemText,
   SwipeableDrawer,
-  Switch,
   Typography,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import FilterListIcon from '@mui/icons-material/FilterList';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import CategoryIcon from '@mui/icons-material/Category';
-import DatasetIcon from '@mui/icons-material/Dataset';
-import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
-import RangeSlider from '../RangeSlider/RangeSlider';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import useDebounce from '../../hooks/useDebounce';
 import getAllData from '../../hooks/useGetAllData';
 import { SearchBarPropsType } from '../../types/SearchBarPropsType';
+import ProductDTO from '../../dto/ProductDTO';
+import filterConfig from '../../config/filterConfig';
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
@@ -45,23 +39,56 @@ export default function Filter({ setFilteredData }: SearchBarPropsType) {
   const [categories, setCategories] = useState<any[]>([]);
   const [minPrice, setMinPrice] = useState(100);
   const [maxPrice, setMaxPrice] = useState(0);
-  const [filter, setFilter] = useState('');
-  const filterKey = useDebounce(filter, 1000);
+  const [filter, setFilter] = useState(false);
+  const filterKey = useDebounce(filter, 300);
   const { data: allProducts, loading, error } = getAllData();
+  const [filteredBrands, setFilteredBrands] = useState<any[]>([]);
+  const [filteredCategories, setFilteredCategories] = useState<any[]>([]);
+  const [filteredMinPrice, setFilteredMinPrice] = useState(0);
+  const [filteredMaxPrice, setFilteredMaxPrice] = useState(100000);
 
   useEffect(() => {
-    if (filter != '') {
-      const newFilter = allProducts?.filter(
-        value => value.title.includes('S') || value.brand.includes('S') || value.category.includes('S')
-      );
-      setFilteredData([...newFilter!]);
-    } else {
+    console.log('Brands:', filteredBrands);
+    console.log('Categories:', filteredCategories);
+    console.log('MinPrice:', filteredMinPrice);
+    console.log('MaxPrice:', filteredMaxPrice);
+    if (
+      filteredBrands.length == 0 &&
+      filteredCategories.length == 0 &&
+      filteredMinPrice == 0 &&
+      filteredMaxPrice == 100000
+    ) {
       setFilteredData(null);
+    } else {
+      let newFilter: ProductDTO[] | undefined = [];
+      let newFilter1: ProductDTO[] | undefined = [];
+      let newFilter2: ProductDTO[] | undefined = [];
+
+      if (filteredBrands.length > 0 && filteredCategories.length > 0) {
+        newFilter1 = allProducts?.filter(value => filteredBrands.includes(value.brand));
+        newFilter2 = allProducts?.filter(value => filteredCategories.includes(value.category));
+        newFilter = newFilter1?.filter(value => newFilter2?.includes(value));
+      } else if (filteredBrands.length > 0) {
+        newFilter = allProducts?.filter(value => filteredBrands.includes(value.brand));
+      } else if (filteredCategories.length > 0) {
+        newFilter = allProducts?.filter(value => filteredCategories.includes(value.category));
+      }
+
+      if (
+        newFilter?.length != 0 ||
+        (newFilter?.length == 0 && (filteredBrands.length > 0 || filteredCategories.length > 0))
+      ) {
+        newFilter = newFilter?.filter(value => value.price > filteredMinPrice && value.price < filteredMaxPrice);
+      } else {
+        newFilter = allProducts?.filter(value => value.price > filteredMinPrice && value.price < filteredMaxPrice);
+      }
+
+      setFilteredData([...newFilter!]);
     }
   }, [filterKey]);
 
   useEffect(() => {
-    let min = 1000;
+    let min = 100000;
     let max = 0;
 
     allProducts?.forEach(product => {
@@ -95,88 +122,69 @@ export default function Filter({ setFilteredData }: SearchBarPropsType) {
     setState({ ...state, [anchor]: open });
   };
 
-  const handleClick = (setOpenBasic: any, openBasic: any) => {
+  const handleClickFilter = (anchor: Anchor, open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+    if (
+      event &&
+      event.type === 'keydown' &&
+      ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')
+    ) {
+      return;
+    }
+
+    setState({ ...state, [anchor]: open });
+    if (filter) {
+      setFilter(false);
+    } else {
+      setFilter(true);
+    }
+  };
+
+  const handleClickListItem = (setOpenBasic: any, openBasic: any) => {
     setOpenBasic(!openBasic);
   };
 
-  const FilterOptions = [
-    {
-      name: 'Favourites',
-      icon: (
-        <>
-          <FavoriteIcon></FavoriteIcon>
-        </>
-      ),
-      callback: setOpen,
-      open: open,
-      items: (
-        <>
-          <Switch></Switch>
-        </>
-      ),
-    },
-    {
-      name: 'Category',
-      icon: (
-        <>
-          <CategoryIcon></CategoryIcon>
-        </>
-      ),
-      callback: setOpen1,
-      open: open1,
-      items: (
-        <>
-          {categories.map(category => (
-            <FormControlLabel
-              control={<Checkbox size="small" />}
-              label={category}
-              labelPlacement="end"
-              key={category}
-              sx={{ maxWidth: 200, marginLeft: 5 }}
-            />
-          ))}
-        </>
-      ),
-    },
-    {
-      name: 'Brand',
-      icon: (
-        <>
-          <DatasetIcon></DatasetIcon>
-        </>
-      ),
-      callback: setOpen2,
-      open: open2,
-      items: (
-        <>
-          {brands.map(brand => (
-            <FormControlLabel
-              control={<Checkbox size="small" />}
-              label={brand}
-              labelPlacement="end"
-              key={brand}
-              sx={{ maxWidth: 200, marginLeft: 9 }}
-            />
-          ))}
-        </>
-      ),
-    },
-    {
-      name: 'Price',
-      icon: (
-        <>
-          <MonetizationOnIcon></MonetizationOnIcon>
-        </>
-      ),
-      callback: setOpen3,
-      open: open3,
-      items: (
-        <>
-          <RangeSlider min={minPrice} max={maxPrice}></RangeSlider>
-        </>
-      ),
-    },
-  ];
+  const handleCheckboxCategory = (event: any) => {
+    if (!filteredCategories.includes(event.target.value)) {
+      //filteredCategories.push(event.target.value);
+      setFilteredCategories([...filteredCategories, event.target.value]);
+    } else {
+      const newFilter = filteredCategories?.filter(value => value != event.target.value);
+      setFilteredCategories([...newFilter!]);
+    }
+  };
+
+  const handleCheckboxBrand = (event: any) => {
+    if (!filteredBrands.includes(event.target.value)) {
+      //filteredBrands.push(event.target.value);
+      setFilteredBrands([...filteredBrands, event.target.value]);
+    } else {
+      const newFilter = filteredBrands?.filter(value => value != event.target.value);
+      setFilteredBrands([...newFilter!]);
+    }
+  };
+
+  const options = filterConfig(
+    setOpen,
+    open,
+    setOpen1,
+    open1,
+    setOpen2,
+    open2,
+    setOpen3,
+    open3,
+    categories,
+    handleCheckboxCategory,
+    brands,
+    handleCheckboxBrand,
+    minPrice,
+    setFilteredMinPrice,
+    maxPrice,
+    setFilteredMaxPrice,
+    filteredBrands,
+    filteredCategories,
+    filteredMinPrice,
+    filteredMaxPrice
+  );
 
   const list = (anchor: Anchor) => (
     <Box sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 350 }} role="presentation">
@@ -185,10 +193,13 @@ export default function Filter({ setFilteredData }: SearchBarPropsType) {
           Filter
         </Typography>
         <List>
-          {FilterOptions.map(option => (
+          {options.map((option: any) => (
             <ListItem key={option.name} disablePadding>
               <Grid container direction="column" justifyContent="center" alignItems="center">
-                <ListItemButton onClick={() => handleClick(option.callback, option.open)} sx={{ minWidth: 200 }}>
+                <ListItemButton
+                  onClick={() => handleClickListItem(option.callback, option.open)}
+                  sx={{ minWidth: 200 }}
+                >
                   <ListItemIcon>{option.icon}</ListItemIcon>
                   <ListItemText primary={option.name} />
                   {option.open ? <ExpandLess /> : <ExpandMore />}
@@ -202,7 +213,7 @@ export default function Filter({ setFilteredData }: SearchBarPropsType) {
             </ListItem>
           ))}
         </List>
-        <Button variant="contained" sx={{ marginTop: 5 }} onClick={toggleDrawer(anchor, false)}>
+        <Button variant="contained" sx={{ marginTop: 5 }} onClick={handleClickFilter('right', true)}>
           Apply Filters
         </Button>
       </Grid>

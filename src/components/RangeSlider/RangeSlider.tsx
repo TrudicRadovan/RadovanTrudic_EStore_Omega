@@ -8,18 +8,28 @@ function valuetext(value: number) {
   return `${value}°C`;
 }
 
-export default function RangeSlider({ min, max }: RangeSliderPropsType) {
+export default function RangeSlider({
+  min,
+  max,
+  filteredMinPrice,
+  setFilteredMinPrice,
+  filteredMaxPrice,
+  setFilteredMaxPrice,
+}: RangeSliderPropsType) {
   const [value, setValue] = useState<number[]>([min, max]);
 
-  const handleChange = (event: Event, newValue: number | number[]) => {
+  const handleChange = (event: any, newValue: number | number[]) => {
+    //console.log(event.target.value);
     setValue(newValue as number[]);
+    setFilteredMinPrice(event.target.value[0]);
+    setFilteredMaxPrice(event.target.value[1]);
   };
 
   return (
-    <Box sx={{ width: 200, marginTop: 2 }}>
+    <Box sx={{ minWidth: 150, marginTop: 2 }}>
       <Slider
         getAriaLabel={() => 'Temperature range'}
-        value={value}
+        value={[filteredMinPrice, filteredMaxPrice]}
         min={min}
         max={max}
         onChange={handleChange}

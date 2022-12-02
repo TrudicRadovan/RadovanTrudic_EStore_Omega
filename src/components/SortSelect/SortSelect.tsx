@@ -1,13 +1,16 @@
+/* eslint-disable */
 import { Box, FormControl, MenuItem, Select, SvgIcon } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import SortIcon from '@mui/icons-material/Sort';
 import getAllData from '../../hooks/useGetAllData';
 import { SearchBarPropsType } from '../../types/SearchBarPropsType';
 import useDebounce from '../../hooks/useDebounce';
+import { SortSelectPropsType } from '../../types/SortSelectPropsType';
+import ProductDTO from '../../dto/ProductDTO';
 
-const SortSelect = ({ setFilteredData }: SearchBarPropsType) => {
+const SortSelect = ({ filteredData, setFilteredData }: SortSelectPropsType) => {
   const [sort, setSort] = useState('');
-  const sortKey = useDebounce(sort, 1000);
+  const sortKey = useDebounce(sort, 300);
   const { data: allProducts, loading, error } = getAllData();
 
   const options = [
@@ -39,29 +42,60 @@ const SortSelect = ({ setFilteredData }: SearchBarPropsType) => {
 
   useEffect(() => {
     if (sort != '') {
-      const newFilter = allProducts?.sort((a, b) => {
-        const valueA = sort.includes('Rating') ? a.rating : a.price;
-        const valueB = sort.includes('Rating') ? b.rating : b.price;
+      let newFilter: ProductDTO[] = [];
+      if (filteredData == undefined) {
+        newFilter = allProducts?.sort((a, b) => {
+          const valueA = sort.includes('Rating') ? a.rating : a.price;
+          const valueB = sort.includes('Rating') ? b.rating : b.price;
 
-        if (sort.includes('Higher')) {
-          if (valueA > valueB) {
-            return -1;
+          if (sort.includes('Higher')) {
+            if (valueA > valueB) {
+              return -1;
+            }
+            if (valueA < valueB) {
+              return 1;
+            }
+            return 0;
+          } else {
+            if (valueA < valueB) {
+              return -1;
+            }
+            if (valueA > valueB) {
+              return 1;
+            }
+            return 0;
           }
-          if (valueA < valueB) {
-            return 1;
-          }
-          return 0;
-        } else {
-          if (valueA < valueB) {
-            return -1;
-          }
-          if (valueA > valueB) {
-            return 1;
-          }
-          return 0;
+        }) as ProductDTO[];
+        setFilteredData([...newFilter!]);
+      } else {
+        if (filteredData.length > 0) {
+          newFilter = filteredData?.sort((a: any, b: any) => {
+            const valueA = sort.includes('Rating') ? a.rating : a.price;
+            const valueB = sort.includes('Rating') ? b.rating : b.price;
+
+            if (sort.includes('Higher')) {
+              if (valueA > valueB) {
+                return -1;
+              }
+              if (valueA < valueB) {
+                return 1;
+              }
+              return 0;
+            } else {
+              if (valueA < valueB) {
+                return -1;
+              }
+              if (valueA > valueB) {
+                return 1;
+              }
+              return 0;
+            }
+          }) as ProductDTO[];
         }
-      });
-      setFilteredData([...newFilter!]);
+
+        console.log('Filtereeed', newFilter);
+        setFilteredData([...newFilter!]);
+      }
     } else {
       setFilteredData(null);
     }
