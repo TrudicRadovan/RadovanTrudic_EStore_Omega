@@ -27,7 +27,7 @@ const Login = () => {
               <AccountCircleIcon sx={{ color: 'white', height: 100, width: 100 }} />
             </IconButton>
           </Grid>
-          <Grid item>
+          <Grid item container direction="row" justifyContent="center" alignItems="center">
             <div>
               <h3 style={{ color: 'white' }}>Please enter your credentials</h3>
             </div>

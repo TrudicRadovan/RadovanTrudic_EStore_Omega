@@ -54,7 +54,7 @@ const Home = () => {
       {allData && (
         <>
           <Grid container direction="column" justifyContent="center" alignItems="center">
-            <Grid item minWidth={700} paddingBottom={5}>
+            <Grid item minWidth={'70%'} paddingBottom={5}>
               <SearchBar setFilteredData={setFilteredData} />
             </Grid>
           </Grid>
@@ -88,12 +88,12 @@ const Home = () => {
             }}
           >
             {filteredData.map(data => (
-              <Grid item lg={3} container key={data.id}>
+              <Grid item lg={3} md={4} sm={6} container key={data.id}>
                 <DataCard product={data} />
               </Grid>
             ))}
             {filteredData?.length == 0 && (
-              <Grid item>
+              <Grid item container direction="row" justifyContent="center" alignItems="center">
                 <p>There is no product matching this search.</p>
               </Grid>
             )}
@@ -118,6 +118,8 @@ const Home = () => {
                   <Grid
                     item
                     lg={3}
+                    md={4}
+                    sm={6}
                     container
                     key={`${data.id}-${i}`}
                     ref={setLastElement as unknown as React.RefObject<HTMLDivElement>}
@@ -125,7 +127,7 @@ const Home = () => {
                     <DataCard product={data} />
                   </Grid>
                 ) : (
-                  <Grid item lg={3} container key={`${data.id}-${i}`}>
+                  <Grid item lg={3} md={4} sm={6} container key={`${data.id}-${i}`}>
                     <DataCard product={data} />
                   </Grid>
                 );

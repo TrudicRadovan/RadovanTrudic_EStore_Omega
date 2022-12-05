@@ -69,7 +69,7 @@ const LoginFormik = () => {
               id="password"
               placeholder="Password"
               type={values.showPassword ? 'text' : 'password'}
-              sx={{ marginBottom: 1, color: 'white', width: 300, fontSize: 16 }}
+              sx={{ marginBottom: 1, color: 'white', maxWidth: 300, fontSize: 16 }}
               {...formik.getFieldProps('password')}
               endAdornment={
                 <InputAdornment position="end">

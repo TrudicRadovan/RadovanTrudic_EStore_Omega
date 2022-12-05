@@ -23,23 +23,27 @@ const ProductsDataGrid = ({ products }: ProductsDataGridPropsType) => {
           experimentalFeatures={{ newEditingApi: true }}
         />
         <Grid container spacing={3} direction="row" justifyContent="center" alignItems="flex-start">
-          <Grid item xs={6} container direction="row" justifyContent="flex-start" alignItems="flex-start">
-            <Button
-              variant="contained"
-              startIcon={<ShoppingCartIconOutlined />}
-              sx={{ color: 'white', background: '#00bbff', marginTop: 2 }}
-            >
-              Buy
-            </Button>
-            <Button
-              variant="contained"
-              startIcon={<DeleteOutlineIcon />}
-              sx={{ color: 'white', background: '#00bbff', marginTop: 2, marginLeft: 2 }}
-            >
-              Delete
-            </Button>
+          <Grid item xs={8} container direction="row" justifyContent="flex-start" alignItems="flex-start" spacing={1}>
+            <Grid item>
+              <Button
+                variant="contained"
+                startIcon={<ShoppingCartIconOutlined />}
+                sx={{ color: 'white', background: '#00bbff', marginTop: 2 }}
+              >
+                Buy
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                variant="contained"
+                startIcon={<DeleteOutlineIcon />}
+                sx={{ color: 'white', background: '#00bbff', marginTop: 2 }}
+              >
+                Delete
+              </Button>
+            </Grid>
           </Grid>
-          <Grid item xs={6} container direction="column" justifyContent="flex-end" alignItems="flex-end">
+          <Grid item xs={4} container direction="column" justifyContent="flex-end" alignItems="flex-end">
             <Grid item sx={{ marginTop: 2.5 }}>
               <h3>Total Amount: 3731€</h3>
             </Grid>
