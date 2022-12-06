@@ -4,6 +4,8 @@ import App from './App';
 import './index.css';
 import axios from 'axios';
 import { redirect } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from './redux/app/store';
 
 /*axios.interceptors.request.use(request => {
   console.log(request);
@@ -24,4 +26,8 @@ axios.interceptors.response.use(
 );*/
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
-root.render(<App />);
+root.render(
+  <Provider store={store}>
+    <App />
+  </Provider>
+);
