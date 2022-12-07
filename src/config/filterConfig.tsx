@@ -26,7 +26,9 @@ export default function filterConfig(
   filteredBrands: any,
   filteredCategories: any,
   filteredMinPrice: any,
-  filteredMaxPrice: any
+  filteredMaxPrice: any,
+  handleSwitchFavorites: any,
+  favoritesSwitch: any
 ): any {
   const FilterOptions = [
     {
@@ -40,7 +42,7 @@ export default function filterConfig(
       open: open,
       items: (
         <>
-          <Switch></Switch>
+          <Switch onChange={handleSwitchFavorites} checked={favoritesSwitch}></Switch>
         </>
       ),
     },

@@ -21,6 +21,8 @@ import getAllData from '../../hooks/useGetAllData';
 import { SearchBarPropsType } from '../../types/SearchBarPropsType';
 import ProductDTO from '../../dto/ProductDTO';
 import filterConfig from '../../config/filterConfig';
+import { useAppSelector, useAppDispatch } from '../../redux/app/hooks';
+import { addToFavorites, deleteFromFavorites, selectFavorites } from '../../redux/features/favorites/favoritesSlice';
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
@@ -42,17 +44,22 @@ export default function Filter({ setFilteredData }: SearchBarPropsType) {
   const [filter, setFilter] = useState(false);
   const filterKey = useDebounce(filter, 300);
   const { data: allProducts, loading, error } = getAllData();
+  const [filteredFavorites, setFilteredFavorites] = useState<any[]>([]);
   const [filteredBrands, setFilteredBrands] = useState<any[]>([]);
   const [filteredCategories, setFilteredCategories] = useState<any[]>([]);
   const [filteredMinPrice, setFilteredMinPrice] = useState(0);
   const [filteredMaxPrice, setFilteredMaxPrice] = useState(100000);
+  const favorites = useAppSelector(selectFavorites);
+  const [favoritesSwitch, setFavoritesSwitch] = useState(false);
 
   useEffect(() => {
+    console.log('Favorites:', favorites);
     console.log('Brands:', filteredBrands);
     console.log('Categories:', filteredCategories);
     console.log('MinPrice:', filteredMinPrice);
     console.log('MaxPrice:', filteredMaxPrice);
     if (
+      favoritesSwitch == false &&
       filteredBrands.length == 0 &&
       filteredCategories.length == 0 &&
       filteredMinPrice == 0 &&
@@ -81,6 +88,10 @@ export default function Filter({ setFilteredData }: SearchBarPropsType) {
         newFilter = newFilter?.filter(value => value.price > filteredMinPrice && value.price < filteredMaxPrice);
       } else {
         newFilter = allProducts?.filter(value => value.price > filteredMinPrice && value.price < filteredMaxPrice);
+      }
+
+      if (favoritesSwitch) {
+        newFilter = newFilter?.filter(value => favorites.includes(value.id));
       }
 
       setFilteredData([...newFilter!]);
@@ -163,6 +174,19 @@ export default function Filter({ setFilteredData }: SearchBarPropsType) {
     }
   };
 
+  const handleSwitchFavorites = (event: any) => {
+    console.log(event.target.checked);
+    console.log(favorites);
+    setFavoritesSwitch(event.target.checked);
+    /*if (event.target.checked) {
+      console.log(favorites);
+      const newFilter = allProducts?.filter(value => favorites.includes(value.id));
+      setFilteredFavorites([...newFilter!]);
+    } else {
+      setFilteredFavorites([]);
+    }*/
+  };
+
   const options = filterConfig(
     setOpen,
     open,
@@ -183,7 +207,9 @@ export default function Filter({ setFilteredData }: SearchBarPropsType) {
     filteredBrands,
     filteredCategories,
     filteredMinPrice,
-    filteredMaxPrice
+    filteredMaxPrice,
+    handleSwitchFavorites,
+    favoritesSwitch
   );
 
   const list = (anchor: Anchor) => (
