@@ -9,7 +9,7 @@ import ShoppingCartIconOutlined from '@mui/icons-material/ShoppingCartOutlined';
 import Button from '@mui/material/Button';
 import { DataCardPropsType } from '../../types/DataCardPropsType';
 import { useNavigate } from 'react-router-dom';
-import FavouritesButton from '../FavouritesButton/FavouritesButton';
+import FavoritesButton from '../FavoritesButton/FavoritesButton';
 import UserContext from '../../contexts/UserContext';
 import addShoppingCart from '../../services/shoppingCartSevice/addShoppingCart';
 import ProductDTO from '../../dto/ProductDTO';
@@ -59,7 +59,7 @@ export default function DataCard({ product }: DataCardPropsType) {
       >
         <Grid item container direction="row" justifyContent="flex-end" alignItems="center">
           <Grid item>
-            <FavouritesButton />
+            <FavoritesButton productId={product.id} />
           </Grid>
         </Grid>
         <Grid item>

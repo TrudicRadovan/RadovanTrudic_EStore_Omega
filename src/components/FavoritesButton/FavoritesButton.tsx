@@ -1,17 +1,29 @@
 import { Typography, IconButton, Tooltip } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import FavoriteIconOutlined from '@mui/icons-material/FavoriteBorderOutlined';
 import React from 'react';
+import { useAppSelector, useAppDispatch } from '../../redux/app/hooks';
+import { addToFavorites, deleteFromFavorites, selectFavorites } from '../../redux/features/favorites/favoritesSlice';
 
-const FavouritesButton = () => {
+const FavouritesButton = ({ productId }: { productId: number }) => {
   const [icon, setIcon] = useState(0);
+  const dispatch = useAppDispatch();
+  const favorites = useAppSelector(selectFavorites);
+
+  useEffect(() => {
+    if (favorites.includes(productId)) {
+      setIcon(1);
+    }
+  }, []);
 
   function onButtonClicked() {
     if (icon === 0) {
       setIcon(1);
+      dispatch(addToFavorites(productId));
     } else {
       setIcon(0);
+      dispatch(deleteFromFavorites(productId));
     }
   }
 

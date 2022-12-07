@@ -6,7 +6,7 @@ import ShoppingCartIconOutlined from '@mui/icons-material/ShoppingCartOutlined';
 import getData from '../../hooks/useGetData';
 import './ProductDetails.css';
 import ImageSlider from '../../components/ImageSlider/ImageSlider';
-import FavouritesButton from '../../components/FavouritesButton/FavouritesButton';
+import FavoritesButton from '../../components/FavoritesButton/FavoritesButton';
 
 const Img = styled('img')({
   margin: 'auto',
@@ -37,7 +37,7 @@ const ProductDetails = () => {
           <Grid item lg={6} container direction="column" justifyContent="center" alignItems="flex-start">
             <Grid item container direction="row" justifyContent="flex-end" alignItems="center">
               <Grid item>
-                <FavouritesButton />
+                <FavoritesButton productId={product.id} />
               </Grid>
             </Grid>
             <Grid item>
