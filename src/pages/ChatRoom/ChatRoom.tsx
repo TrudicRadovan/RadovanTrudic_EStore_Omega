@@ -68,7 +68,7 @@ const ChatRoom = () => {
   return (
     <div className="chat-room">
       <h1>Chat Room</h1>
-      <Grid container spacing={3} direction="row" justifyContent="center" alignItems="center" maxWidth={1000}>
+      <Grid container spacing={3} direction="row" justifyContent="center" alignItems="center" maxWidth={300}>
         {messages.map(message => (
           <Grid
             key={message.timestamp}
@@ -146,7 +146,6 @@ const ChatRoom = () => {
               value={message}
               onKeyUp={handleKeyboard}
               sx={{
-                minWidth: 500,
                 '& .MuiOutlinedInput-root': {
                   '& fieldset': {
                     borderRadius: `25px`,
